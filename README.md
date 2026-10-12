@@ -1,58 +1,52 @@
-# A/B Testing Analysis for Marketing Campaign Performance
+# A/B Testing Analysis: Marketing Campaign Performance
 
-## Project Overview
+Which of two ad campaigns was the better use of budget? This project compares a **Control** and a **Test** campaign over 30 days of ad data, using Python, and ends with a budget recommendation.
 
-This project analyzes the performance of two marketing campaigns using A/B testing techniques. The objective is to compare the Control Campaign and Test Campaign to determine which strategy performs better based on key marketing metrics and supports data-driven business decision-making.
+## Question
+
+Both campaigns drove a similar number of purchases. Did the Test campaign's different setup actually pay off, or is the Control campaign still the more cost-efficient choice?
 
 ## Dataset
 
-* Dataset: Marketing A/B Testing Dataset
-* Files Used:
+- `control_group.csv` and `test_group.csv`: one row per day for 30 days (Aug 2019), 60 rows in total
+- Columns: spend (USD), impressions, reach, website clicks, searches, view content, add to cart, purchases
+- Days with missing values were excluded from the totals below
 
-  * `control_group.csv`
-  * `test_group.csv`
-* Number of records: 60 observations
-* Campaigns:
+## Method
 
-  * Control Campaign
-  * Test Campaign
+1. Load, clean and merge the two campaign files
+2. Exploratory analysis of each funnel stage (impressions to clicks to add-to-cart to purchase)
+3. Compare purchases, conversion rates and cost per purchase
+4. Check whether the daily purchase difference is statistically meaningful
+5. Visualise the results and write a recommendation
 
-## Tools Used
+## Results
 
-* Python
-* Pandas
-* Matplotlib
-* Google Colab
+| Metric | Control | Test |
+|---|---|---|
+| Total spend (USD) | 66,818 | 76,892 |
+| Total purchases | 15,161 | 15,637 |
+| **Cost per purchase (USD)** | **4.41** | **4.92** |
+| Click-through rate (clicks / impressions) | 4.86% | 8.09% |
+| Purchases per website click | 9.83% | 8.64% |
+| Add-to-cart to purchase | 40.2% | 59.1% |
+| Average purchases per day | 522.8 | 521.2 |
 
-## Project Workflow
+- **Purchases per day are statistically the same.** Welch t-statistic on daily purchases is about 0.03, so there is no evidence either campaign sells more.
+- **The Test campaign attracted more clicks and converted more add-to-carts, but it cost more per purchase** (USD 4.92 vs 4.41, about 12% higher).
+- Higher spend did not buy more purchases, so cost per purchase is the deciding metric here.
 
-1. Data Loading
-2. Data Cleaning
-3. Data Merging
-4. Exploratory Data Analysis (EDA)
-5. Purchase Analysis
-6. Conversion Rate Analysis
-7. Cost per Purchase Analysis
-8. Data Visualization
-9. Business Recommendations
-10. Conclusion
+## Recommendation
 
-## Key Findings
+- Keep the **Control campaign** as the default because it is more cost-efficient for the same purchase volume.
+- Investigate why the Test campaign earns more clicks and add-to-cart conversions before dropping it, since its engagement is clearly stronger.
+- Track cost per purchase alongside conversion rate in future A/B tests, and run each test long enough to confirm significance.
 
-* Both campaigns generated a similar number of purchases.
-* The Control Campaign achieved a lower average cost per purchase.
-* The Test Campaign performed competitively but was less cost-efficient.
-* Cost per purchase proved to be a critical metric in evaluating campaign effectiveness.
+## Limitations
 
-## Business Recommendations
+- Only 30 days per campaign, so the sample is small.
+- Spend was not equal across the two campaigns, which makes a like-for-like comparison harder.
 
-* Continue using the Control Campaign due to its better cost efficiency.
-* Use A/B testing regularly to evaluate new marketing strategies before full implementation.
-* Monitor conversion rates and cost-related KPIs to optimize advertising budgets.
-* Combine the strongest elements of both campaigns to improve future performance.
+## Tools
 
-## Conclusion
-
-This project used Python to analyze and compare the performance of Control and Test marketing campaigns through A/B testing techniques. Key performance indicators such as purchases, conversion rate, and cost per purchase were evaluated to determine campaign effectiveness.
-
-The analysis showed that both campaigns generated a similar number of purchases. However, the Control Campaign achieved a lower average cost per purchase, making it more cost-efficient than the Test Campaign. These findings demonstrate how A/B testing and data analysis can help businesses optimize marketing strategies, improve budget allocation, and make informed business decisions.
+Python, pandas, matplotlib, Google Colab. Notebook: `AB_Testing_Analysis.ipynb`.
